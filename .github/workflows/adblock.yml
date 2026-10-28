@@ -1,0 +1,67 @@
+name: 広告の一覧の更新
+
+on:
+  schedule:
+    # 毎朝 6:47（日本時間）。EasyList は4日ごと、EasyPrivacy は数日ごとに更新される
+    - cron: "47 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: adblock
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  ISSUE_TITLE: 広告の一覧の更新が止まっています
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+jobs:
+  update:
+    # WebKit に本当に読めるかを確かめるため macOS で動かす（公開リポジトリは無料）
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 変換の道具のテスト（ネットにつながない）
+        working-directory: adblock
+        run: python3 -m unittest -v test_convert.py
+
+      - name: 一覧を取ってきて変換する
+        working-directory: adblock
+        run: python3 build.py
+
+      - name: WebKit に読ませて確かめる（読めなければここで止まり、commit しない）
+        working-directory: adblock/dist
+        run: |
+          files=$(ls *.json | grep -v manifest.json)
+          swift ../compile_check.swift $files
+
+      - name: 変わっていたら commit
+        run: |
+          if git diff --quiet -- adblock/dist && [ -z "$(git ls-files --others --exclude-standard adblock/dist)" ]; then
+            echo "変化なし（正常）"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add adblock/dist
+          git commit -m "広告の一覧を更新"
+          git pull --rebase
+          git push
+
+      - name: 失敗を issue で知らせる
+        if: failure()
+        run: |
+          body=$(printf '広告の一覧の更新が失敗しました（取得できない・安全装置で止めた・WebKit が読めない・テストが落ちた、のどれか）。dist は書き換えていません。アプリは前の一覧のまま動きます。\n\n実行の記録: %s' "$RUN_URL")
+          num=$(gh issue list --state open --limit 100 --json number,title -q ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n1)
+          if [ -n "$num" ]; then gh issue comment "$num" --body "$body"; else gh issue create --title "$ISSUE_TITLE" --body "$body"; fi
+
+      - name: 直ったら issue を閉じる
+        if: success()
+        run: |
+          num=$(gh issue list --state open --limit 100 --json number,title -q ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n1)
+          if [ -n "$num" ]; then gh issue close "$num" --comment "更新が成功したので閉じます。 $RUN_URL"; fi

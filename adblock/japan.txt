@@ -1,0 +1,60 @@
+[Adblock Plus 2.0]
+! Title: 見守りブラウザ 日本の広告
+! この一覧は mimamori-list の自作（CC0）。EasyList に入っていない、日本のサイトでよく見る広告の配信元と枠。
+! 2026-10-28：livedoor・オリコン・エキサイト・J-CAST・tenki.jp・Yahoo!ニュースで、ブロック後も残った配信元から作った。
+!
+! --- 配信元（ページの中の広告） ---
+||adingo.jp^$third-party
+||geniee.jp^$third-party
+||genieesspv.jp^$third-party
+||socdm.com^$third-party
+||impact-ad.jp^$third-party
+||popin.cc^$third-party
+||teads.tv^$third-party
+||gmossp-sp.jp^$third-party
+||gmossp.jp^$third-party
+||uncn.jp^$third-party
+||ladsp.com^$third-party
+||adtdp.com^$third-party
+||dc-tag.jp^$third-party
+||contentsfeed.com^$third-party
+||i-mobile.co.jp^$third-party
+||microad.jp^$third-party
+||logly.co.jp^$third-party
+||fluct.jp^$third-party
+||adsfluct.com^$third-party
+||zucks.net^$third-party
+||nend.net^$third-party
+||ad-stir.com^$third-party
+||gsspat.jp^$third-party
+||scaleout.jp^$third-party
+||yieldone.com^$third-party
+||ad-generation.jp^$third-party
+||adg.jp^$third-party
+||amanad.adtdp.com^
+||adresult.jp^$third-party
+||afi-b.com^$third-party
+||akamoney.jp^$third-party
+||sp-ad.jp^$third-party
+!
+! --- Yahoo! JAPAN の広告（yads）。yimg.jp 全体は画像の置き場なので、yads だけ ---
+||yads.c.yimg.jp^
+||yads.yjtag.yahoo.co.jp^
+||yads.yahoo.co.jp^
+||ads.yahoo.co.jp^
+!
+! --- 広告を消した後に残る空の枠を隠す ---
+##[id^="yads"]
+##.yads_ad
+##[id^="gmossp_"]
+##[id^="div-gpt-ad"]
+##ins.adsbygoogle
+##iframe[src*="adingo.jp"]
+##iframe[src*="genieesspv.jp"]
+##[id^="geniee"]
+##[class^="popIn"]
+##[id^="_popIn"]
+##.logly-lift-ad
+##[id^="logly-lift"]
+##[id*="_imobile_"]
+##[data-ad-slot]

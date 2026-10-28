@@ -62,3 +62,19 @@ python3 -m venv .venv && .venv/bin/pip install "pypdf[crypto]"   # PDF が暗号
 ## 出典
 
 一覧は消費者庁の公表資料（https://www.caa.go.jp/）をもとに作っています。各行の `notice` が元の通知です。消費者庁のサイトのコンテンツは、政府標準利用規約に沿って出典を書けば使えます。
+
+## 広告の一覧（adblock/）
+
+見守りブラウザの広告ブロックに使う一覧です。毎朝 GitHub Actions（macOS）が、元の一覧を取ってきて WebKit の Content Blocker の形に変換し、**本物の WebKit に読ませて通った時だけ** `adblock/dist/` を更新します。アプリは `adblock/dist/manifest.json` を見て、中身（sha256）が変わった一覧だけを取りに行きます。
+
+| ファイル | 元 | ライセンス |
+|---|---|---|
+| `dist/japan-*.json` | `adblock/japan.txt`（見守りブラウザの自作。日本の広告の配信元と枠） | CC0-1.0 |
+| `dist/easylist-*.json` | [EasyList](https://easylist.to/)（The EasyList authors） | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)（EasyList は GPL-3.0 と CC BY-SA 3.0 の二重ライセンス。ここでは CC BY-SA 3.0 を選んでいます） |
+| `dist/easyprivacy-*.json` | [EasyPrivacy](https://easylist.to/)（The EasyList authors） | CC BY-SA 3.0（同上） |
+
+`dist/easylist-*.json` と `dist/easyprivacy-*.json` は、元の一覧を `adblock/convert.py` で変換した二次的な著作物で、CC BY-SA 3.0 で公開します。変換では、WebKit が読めない書き方（正規表現の規則・`$redirect` などの拡張・拡張 CSS・ASCII でない規則）を捨てています。
+
+- 変換の道具：`adblock/convert.py`（自作。GPL の変換器は使っていません）。検査は `adblock/test_convert.py`
+- WebKit で読めるかの確かめ：`adblock/compile_check.swift`
+- 安全装置：元の一覧が小さすぎる・規則が前の半分以下に減った・WebKit が読めない、のどれかで止まり、dist を書き換えずに issue を立てます

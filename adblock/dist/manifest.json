@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-28T07:44:21Z",
+  "lists": [
+    {
+      "id": "japan-1",
+      "file": "japan-1.json",
+      "rules": 37,
+      "sha256": "49df5fa940cdd3e3d61283259a8352e3aec31199ebfe7df933e155d7ba62e587",
+      "source": "見守りブラウザ（自作）",
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "easylist-1",
+      "file": "easylist-1.json",
+      "rules": 54589,
+      "sha256": "15e031a4096a36fb5791464ae1bd954d36023dc81d5d3b537a4c6627c0c251f3",
+      "source": "EasyList (https://easylist.to/)",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "id": "easyprivacy-1",
+      "file": "easyprivacy-1.json",
+      "rules": 56113,
+      "sha256": "5a5ef266d8716405b5b1a99c2513fb43fcd9642449c3af4908067754d94096df",
+      "source": "EasyPrivacy (https://easylist.to/)",
+      "license": "CC-BY-SA-3.0"
+    }
+  ]
+}
