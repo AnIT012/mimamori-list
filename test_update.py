@@ -197,5 +197,15 @@ class RealBlocklist(unittest.TestCase):
             self.assertIsNone(u.platform_of(h))
 
 
+class HostingTests(unittest.TestCase):
+    def test_hosting_root_skipped_but_shop_blocked(self):
+        import update
+        self.assertEqual(update.platform_of("peraichi.com"), "peraichi.com")
+        self.assertIsNone(update.platform_of("kenko-shop.base.shop"))
+        self.assertIsNone(update.platform_of("lp.wixsite.com"))
+        # 大きな場は、その下も飛ばす（場ごと止めない）
+        self.assertEqual(update.platform_of("item.rakuten.co.jp"), "rakuten.co.jp")
+
+
 if __name__ == "__main__":
     unittest.main()

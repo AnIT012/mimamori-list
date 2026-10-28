@@ -91,5 +91,30 @@ class CosmeticTests(unittest.TestCase):
             c.MAX_RULES_PER_FILE = old
 
 
+class AuditFixTests(unittest.TestCase):
+    def test_slash_rule_with_options_is_not_regex(self):
+        # 総点検 C10：/aclib.js$script は正規表現ではない普通の規則
+        s = Stats()
+        rule, _ = convert_network("/aclib.js$script", s)
+        self.assertIsNotNone(rule)
+        self.assertEqual(rule["trigger"]["resource-type"], ["script"])
+        self.assertNotIn("regex", s.skipped)
+        # 本当の正規表現は捨てる
+        self.assertIsNone(convert_network("/ad[0-9]+\\.js/$script", Stats())[0])
+
+    def test_hide_only_exception_does_not_lift_network_blocks(self):
+        # 総点検 C15：@@||site^$generichide はサイト全体の ignore-previous-rules にしない
+        s = Stats()
+        rule, _ = convert_network("@@||jetzt.de^$generichide", s)
+        self.assertIsNone(rule)
+        self.assertEqual(s.skipped, {"hide-only-exception": 1})
+        rule, _ = convert_network("@@||ok.jp^$document", Stats())
+        self.assertEqual(rule["action"]["type"], "ignore-previous-rules")
+
+    def test_mixed_domains_skipped(self):
+        # 総点検 C15：domain=a.com|~b.a.com の除外を黙って落とさない
+        self.assertIsNone(convert_network("||ads.jp^$domain=a.com|~b.a.com", Stats())[0])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -40,8 +40,20 @@ ALL_TYPES = sorted({t for ts in RESOURCE_TYPES.values() for t in ts if t != "pop
 
 # 意味は変わらないので無視してよい印
 IGNORED_OPTIONS = {"important", "match-case", "all", "~important"}
-# 例外の時だけ意味がある、ページ全体の印
-PAGE_OPTIONS = {"document", "elemhide", "generichide", "ehide", "ghide", "doc"}
+# 例外の時だけ意味がある、ページ全体の印。そのサイトでは何も止めない
+PAGE_OPTIONS = {"document", "doc"}
+# 部品を隠すのだけやめる印。WebKit では「隠すのだけやめる」を書けず、通信のブロックまで外れてしまうので捨てる（総点検 C15）
+HIDE_ONLY_EXCEPTIONS = {"elemhide", "generichide", "ehide", "ghide", "specifichide", "shide"}
+# オプションの部分の形（最後の $ の後）
+OPTIONS_RE = re.compile(r"[a-z0-9~,=|._\-*]+", re.IGNORECASE)
+
+
+def split_options(line: str) -> tuple[str, str]:
+    """/aclib.js$script のように / で始まる普通の規則もあるので、最後の $ の後が「オプションの形」なら分ける（総点検 C10）"""
+    i = line.rfind("$")
+    if i > 0 and OPTIONS_RE.fullmatch(line[i + 1:]):
+        return line[:i], line[i + 1:]
+    return line, ""
 
 EXTENDED_CSS = re.compile(
     r":-abp-|:has-text|:contains|:xpath|:matches-css|:upward|:remove|:style|:nth-ancestor|:matches-path|"
@@ -103,6 +115,9 @@ def domains_to_trigger(domains: list[str]) -> dict | None:
     exc = [d[1:] for d in domains if d.startswith("~")]
     if any(not is_ascii(d) or "*" in d or "/" in d for d in inc + exc):
         return None
+    # a.com|~b.a.com のように両方ある時、WebKit は片方しか書けない。除外を落とすと止めすぎるので、規則ごと捨てる（総点検 C15）
+    if inc and exc:
+        return None
     if inc:
         return {"if-domain": sorted({"*" + d.lower() for d in inc})}
     if exc:
@@ -115,8 +130,8 @@ def convert_network(line: str, stats: Stats) -> tuple[dict | None, bool]:
     exception = line.startswith("@@")
     if exception:
         line = line[2:]
-    pattern, _, opts = line.partition("$") if "$" in line and not line.startswith("/") else (line, "", "")
-    if "$" in line and line.startswith("/"):
+    pattern, opts = split_options(line)
+    if len(pattern) > 1 and pattern.startswith("/") and pattern.endswith("/"):
         stats.skip("regex")
         return None, exception
 
@@ -144,6 +159,9 @@ def convert_network(line: str, stats: Stats) -> tuple[dict | None, bool]:
             trigger.update(t)
         elif exception and name in PAGE_OPTIONS:
             page_level = True
+        elif exception and name in HIDE_ONLY_EXCEPTIONS:
+            stats.skip("hide-only-exception")
+            return None, exception
         else:
             stats.skip("option:" + name.split("=")[0])
             return None, exception

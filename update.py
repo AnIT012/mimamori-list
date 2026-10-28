@@ -41,15 +41,21 @@ MAX_NEW_HOSTS = 25
 BACKFILL_YEARS = 4  # 年度の一覧をいくつさかのぼるか（今年度を除く）
 
 # 売り手が店のページを持っていただけの大きな場。場ごと止めないで skipped に記録する。
+# 大きな場：本体もその下（お店のページ）も止めない。お店は場の一部で、場ごと止めることになるため
 PLATFORMS = {
     "amazon.co.jp", "amazon.com", "rakuten.co.jp", "rakuten.ne.jp", "yahoo.co.jp",
     "yahoo.com", "google.com", "google.co.jp", "apple.com", "instagram.com",
     "facebook.com", "fb.com", "x.com", "twitter.com", "line.me", "lin.ee",
     "youtube.com", "youtu.be", "tiktok.com", "mercari.com", "jp.mercari.com",
     "paypay.ne.jp", "paypaymall.yahoo.co.jp", "qoo10.jp", "zozo.jp",
-    "base.shop", "thebase.in", "stores.jp", "shopify.com", "myshopify.com",
     "wowma.jp", "au.com", "dmm.com", "note.com", "ameblo.jp", "linktr.ee",
     "threads.net", "pinterest.com", "bit.ly", "t.co",
+}
+# サイト作りのサービス：本体は止めないが、お店のサイト（お店.base.shop など）はそのお店だけなので止める
+HOSTING = {
+    "base.shop", "thebase.in", "thebase.com", "stores.jp", "shopify.com", "myshopify.com",
+    "peraichi.com", "wixsite.com", "wix.com", "shop-pro.jp", "square.site", "jimdofree.com", "jimdo.com",
+    "wordpress.com", "fc2.com", "hatenablog.com", "studio.site", "makeshop.jp", "ocnk.net",
 }
 GOV_SUFFIXES = (".go.jp", ".lg.jp")
 HOST_RE = re.compile(r"^(?=.{4,253}$)(?!-)([a-z0-9-]{1,63}(?<!-)\.)+[a-z]{2,24}$")
@@ -277,6 +283,9 @@ def platform_of(host: str) -> str | None:
     for p in PLATFORMS:
         if host == p or host.endswith("." + p):
             return p
+    # サイト作りのサービスは本体だけ飛ばす（お店のサイトは止める）
+    if host in HOSTING:
+        return host
     return None
 
 

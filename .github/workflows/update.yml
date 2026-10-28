@@ -41,8 +41,9 @@ jobs:
       - name: 前回の成功から何日たったか
         id: stale
         run: |
-          last=$(gh run list --workflow consumer-list.yml --status success --limit 1 \
-                   --json createdAt -q '.[0].createdAt' 2>/dev/null || true)
+          # このファイル自身（update.yml）の成功した実行を見る。gh が失敗したら黙らずに止める（総点検 C9）
+          last=$(gh run list --workflow update.yml --status success --limit 1 \
+                   --json createdAt -q '.[0].createdAt')
           src="前回の成功した実行"
           if [ -z "$last" ]; then
             last=$(git log -1 --format=%cI -- blocklist.json || true)
