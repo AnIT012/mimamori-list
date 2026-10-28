@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-28T15:04:53+09:00",
+  "sources": [
+    "caa"
+  ],
+  "sites": [
+    {
+      "host": "churumi.com",
+      "company": "株式会社WELLVY",
+      "date": "2026-03-27",
+      "notice": "https://www.caa.go.jp/notice/entry/045634/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "ec.bitela.jp",
+      "company": "株式会社マーキュリー",
+      "date": "2024-11-01",
+      "notice": "https://www.caa.go.jp/notice/entry/039874/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "ec.dr-stick.shop",
+      "company": "株式会社HAL",
+      "date": "2024-04-19",
+      "notice": "https://www.caa.go.jp/notice/entry/037529/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "ec.qzmedica.com",
+      "company": "株式会社VIRTH",
+      "date": "2025-06-27",
+      "notice": "https://www.caa.go.jp/notice/entry/042885/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "emerire.com",
+      "company": "株式会社LIT",
+      "date": "2023-06-28",
+      "notice": "https://www.caa.go.jp/notice/entry/033813/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "foxinc.co.jp",
+      "company": "株式会社フォックス",
+      "date": "2025-03-14",
+      "notice": "https://www.caa.go.jp/notice/entry/041431/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "hakualead.com",
+      "company": "株式会社MIO",
+      "date": "2026-03-27",
+      "notice": "https://www.caa.go.jp/notice/entry/045634/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "happylifebio.co.jp",
+      "company": "株式会社HappyLifeBio",
+      "date": "2024-10-17",
+      "notice": "https://www.caa.go.jp/notice/entry/039697/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "lit-online-shop.com",
+      "company": "株式会社LIT",
+      "date": "2023-06-28",
+      "notice": "https://www.caa.go.jp/notice/entry/033813/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "lumierecosme.com",
+      "company": "株式会社Meilie",
+      "date": "2026-03-27",
+      "notice": "https://www.caa.go.jp/notice/entry/045634/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "ones-up.jp",
+      "company": "株式会社ピュレアス",
+      "date": "2026-03-19",
+      "notice": "https://www.caa.go.jp/notice/entry/045480/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "orstar.jp",
+      "company": "株式会社オルリンクス製薬",
+      "date": "2024-04-10",
+      "notice": "https://www.caa.go.jp/notice/entry/037336/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "purely-skin.com",
+      "company": "ASUNOBI株式会社",
+      "date": "2025-09-10",
+      "notice": "https://www.caa.go.jp/notice/entry/043486/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "shirayuki-wakahada.com",
+      "company": "株式会社VERIFY",
+      "date": "2024-12-23",
+      "notice": "https://www.caa.go.jp/notice/entry/040490/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "skin-venus.net",
+      "company": "株式会社BIZM",
+      "date": "2025-11-06",
+      "notice": "https://www.caa.go.jp/notice/entry/044086/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "suncosme.com",
+      "company": "株式会社SUNSIRI",
+      "date": "2024-10-04",
+      "notice": "https://www.caa.go.jp/notice/entry/039565/",
+      "kind": "行政処分"
+    },
+    {
+      "host": "sunincshop.jp",
+      "company": "株式会社サン",
+      "date": "2024-03-15",
+      "notice": "https://www.caa.go.jp/notice/entry/036684/",
+      "kind": "行政処分"
+    }
+  ],
+  "skipped": [
+    {
+      "host": "item.rakuten.co.jp",
+      "reason": "platform",
+      "notice": "https://www.caa.go.jp/notice/entry/037529/"
+    }
+  ]
+}

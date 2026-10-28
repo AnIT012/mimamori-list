@@ -1,0 +1,138 @@
+name: 消費者庁の処分サイトの更新
+
+on:
+  schedule:
+    # 毎朝 7:17（日本時間）。消費者庁の発表は平日 15 時台が多いので翌朝に拾う
+    - cron: "17 22 * * *"
+  workflow_dispatch:
+    inputs:
+      force_heartbeat:
+        description: 生存の印を今すぐ書く（確かめ用）
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+  actions: read
+
+concurrency:
+  group: consumer-list
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  ISSUE_TITLE: 消費者庁の一覧の更新が止まっています
+  STALE_DAYS: "45"
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 「0件だった」は正常。見るのは「この係が最後に成功したのはいつか」。
+      # 前回の成功（このワークフローの成功した実行）から 45 日を超えていたら知らせる。
+      # 実行の記録が無い時（初回・90日の保存期限切れ）は blocklist.json の最後の commit 日で見る。
+      - name: 前回の成功から何日たったか
+        id: stale
+        run: |
+          last=$(gh run list --workflow consumer-list.yml --status success --limit 1 \
+                   --json createdAt -q '.[0].createdAt' 2>/dev/null || true)
+          src="前回の成功した実行"
+          if [ -z "$last" ]; then
+            last=$(git log -1 --format=%cI -- blocklist.json || true)
+            src="blocklist.json の最後の commit"
+          fi
+          if [ -z "$last" ]; then
+            echo "記録なし（初回）"; echo "stale=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          days=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 86400 ))
+          echo "$src: $last（${days}日前）"
+          echo "days=$days" >> "$GITHUB_OUTPUT"
+          echo "src=$src" >> "$GITHUB_OUTPUT"
+          if [ "$days" -gt "$STALE_DAYS" ]; then echo "stale=true" >> "$GITHUB_OUTPUT"; else echo "stale=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: テスト（ネットにつながない）
+        run: python -m unittest -v test_update.py
+
+      - name: pypdf を入れる
+        run: pip install "pypdf[crypto]==6.21.3"
+
+      # 消費者庁に同じ PDF を何度も取りに行かない
+      - uses: actions/cache@v4
+        with:
+          path: .cache/pdf
+          key: consumer-list-pdf-${{ github.run_id }}
+          restore-keys: consumer-list-pdf-
+
+      - name: 一覧を更新
+        run: python update.py
+
+      - name: 変わっていたら commit
+        run: |
+          if git diff --quiet -- blocklist.json; then
+            echo "変化なし（正常）"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add blocklist.json
+          git commit -m "消費者庁の処分サイトを更新"
+          git pull --rebase
+          git push
+
+      - name: 生存の印（30日 commit がなければ書く）
+        if: success()
+        run: |
+          last=$(git log -1 --format=%ct)
+          days=$(( ( $(date -u +%s) - last ) / 86400 ))
+          echo "最後の commit から ${days} 日"
+          if [ "$days" -le 30 ] && [ "${FORCE_HEARTBEAT:-}" != "1" ]; then exit 0; fi
+          date -u +%Y-%m-%dT%H:%M:%SZ > heartbeat.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add heartbeat.txt
+          git commit -m "生存の印（定期実行を止めないため）"
+          git pull --rebase
+          git push
+        env:
+          FORCE_HEARTBEAT: ${{ inputs.force_heartbeat && '1' || '' }}
+
+      - name: 失敗を issue で知らせる
+        if: failure()
+        env:
+          REASON: 今回の実行が失敗しました（安全装置で止めた・消費者庁のページの形が変わった・取得できなかった・テストが落ちた、のどれか）。blocklist.json は書き換えていません。
+        run: |
+          body=$(printf '%s\n\n実行の記録: %s\n\n直し方は README.md を見てください。' "$REASON" "$RUN_URL")
+          num=$(gh issue list --state open --limit 100 --json number,title \
+                  -q ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n1)
+          if [ -n "$num" ]; then gh issue comment "$num" --body "$body"
+          else gh issue create --title "$ISSUE_TITLE" --body "$body"; fi
+
+      - name: 長くあいていたことを issue で知らせる
+        if: success() && steps.stale.outputs.stale == 'true'
+        env:
+          REASON: 今回は成功しましたが、${{ steps.stale.outputs.src }}から ${{ steps.stale.outputs.days }} 日あいていました（45 日を超えています）。この間は自動で更新されていません。
+        run: |
+          body=$(printf '%s\n\n実行の記録: %s\n\n直し方は README.md を見てください。' "$REASON" "$RUN_URL")
+          num=$(gh issue list --state open --limit 100 --json number,title \
+                  -q ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n1)
+          if [ -n "$num" ]; then gh issue comment "$num" --body "$body"
+          else gh issue create --title "$ISSUE_TITLE" --body "$body"; fi
+
+      - name: 直ったら issue を閉じる
+        if: success() && steps.stale.outputs.stale != 'true'
+        run: |
+          num=$(gh issue list --state open --limit 100 --json number,title \
+                  -q ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -n1)
+          if [ -n "$num" ]; then
+            gh issue close "$num" --comment "更新が成功したので閉じます。 $RUN_URL"
+          fi
