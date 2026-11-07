@@ -1,36 +1,213 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>トップ｜ガードネット</title><style>
-:root { --bg:#fbfaf8; --fg:#1f1d1a; --sub:#5f5a53; --line:#e6e1da; --accent:#0e6b6b; }
-@media (prefers-color-scheme: dark) { :root { --bg:#161514; --fg:#ece8e2; --sub:#a9a39b; --line:#33302c; --accent:#5cc3c3; } }
-* { box-sizing: border-box; }
-body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.8 -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; }
-main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
-h1 { font-size: 26px; line-height: 1.4; margin: 0 0 8px; }
-h2 { font-size: 20px; margin: 40px 0 8px; }
-h3 { font-size: 17px; margin: 28px 0 6px; }
-p, li { color: var(--fg); }
-.sub { color: var(--sub); }
-a { color: var(--accent); }
-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; display: block; overflow-x: auto; }
-th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-th { color: var(--sub); font-weight: 600; }
-nav { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; font-size: 15px; }
-hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
-code { font-size: 14px; }
-</style></head><body><main><nav><a href="index.html">ガードネット</a><a href="privacy.html">プライバシーポリシー</a><a href="terms.html">利用規約</a><a href="attributions.html">出典とライセンス</a></nav><h1>ガードネット</h1>
-<p class="sub">定期購入と通販の罠を、買う手前で止めるブラウザです。</p>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ガードネット｜おじいちゃん、おばあちゃんを守るブラウザ</title>
+<meta name="description" content="おじいちゃん、おばあちゃんの iPhone に入れるブラウザです。見守りプラン（月額390円・税込）で、カート・申し込み・ページからの電話などを申し込む手前でブロックし、見守る人に通知します。広告ブロックは無料です。">
+<meta property="og:title" content="ガードネット｜おじいちゃん、おばあちゃんを守るブラウザ">
+<meta property="og:description" content="申し込む手前でブロックして、見守る人に通知するブラウザ。広告ブロックは無料です。">
+<meta property="og:image" content="https://anit012.github.io/mimamori-list/lp/images/og.jpg">
+<link rel="icon" href="lp/images/icon.png">
+<link rel="stylesheet" href="lp/style.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
 
-<h2>できること</h2>
-<ul>
-<li>広告をブロックします。ここまでは無料で使えます。</li>
-<li>見守りプラン（有料・見守る人が購入）では、定期購入の申込フォーム、カード番号の入力欄、怪しい広告だけのページを、買う手前でブロックします。</li>
-<li>見守る人には、ブロックしたページだけが届きます。閲覧履歴は届きません。</li>
-<li>アカウントの登録はいりません。データはご本人の iCloud にあり、開発者は読めません。</li>
-</ul>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#"><img src="lp/images/icon.png" alt="" width="32" height="32">ガードネット</a>
+    <a class="store-mini" href="#price">料金</a>
+  </div>
+</header>
 
-<h2>お問い合わせ</h2>
-<p><a href="mailto:g.sho.isshiki@gmail.com">g.sho.isshiki@gmail.com</a></p>
-<p class="sub">提供者：AnIT（個人開発者）</p>
+<main>
+  <!-- 最初の1枚：浅葱の地に、2台の端末 -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <p class="kicker">おじいちゃん、<wbr>おば<wbr>あちゃんを<wbr>守る<wbr>ブラウザ</p>
+        <h1>解約の電話は、<br>もうしなくていい。</h1>
+        <p class="lead">申し込む<wbr>手前で<wbr>ブロックして、<wbr>見守る<wbr>人に<wbr>通知します。</p>
+        <div id="download" class="store">
+          <!-- App Store の URL が決まったら href を差し替える（未決） -->
+          <a class="store-btn is-placeholder" href="#" aria-disabled="true">App Store で<wbr>見る<small>準備中</small></a>
+          <p class="store-note">iPhone<wbr>（iOS 26 以降）で<wbr>使えます。<wbr>広告ブロックは<wbr>無料です。</p>
+        </div>
+      </div>
+      <div class="hero-phones" aria-hidden="true">
+        <div class="device d-back"><span class="who watcher">見守る人の iPhone</span><img src="lp/images/notify-inapp.jpg" alt="" width="603" height="1311"></div>
+        <div class="device d-front"><span class="who child">見守られる人の iPhone</span><img src="lp/images/h-sub.jpg" alt="" width="603" height="1311"></div>
+      </div>
+    </div>
+  </section>
 
-<h2>動作の確認</h2>
-<p><a href="test/order.html">見本の申込ページ</a>：ガードネットで開くと止まります。実在の商品ではありません。</p>
-</main></body></html>
+  <!-- つかみ：出典のある数字 -->
+  <section class="stat reveal">
+    <div class="wrap">
+      <p class="stat-lead">気づかないうちに、<wbr>定期便が<wbr>届いていませんか。</p>
+      <p class="stat-num">定期購入の<wbr>相談は<br><strong>年に<wbr>9万件以上</strong></p>
+      <p class="stat-src">出典：<a href="https://www.kokusen.go.jp/soudan_topics/data/subscription_traps.html">国民生活センター<wbr>「定期購入」</a>（2025年度 93,065件・通信販売で<wbr>買った<wbr>商品の<wbr>相談・2026年5月31日時点）</p>
+    </div>
+  </section>
+
+  <!-- 動画 -->
+  <section class="film reveal">
+    <div class="wrap film-in">
+      <div class="film-text">
+        <h2>動画で<wbr>見るガードネット</h2>
+        <p>ブロックから<wbr>通知、<wbr>設定までを、<wbr>約1分で<wbr>見られます。</p>
+      </div>
+      <div class="device film-device">
+        <!-- 動画は marketing/video/guardnet-d-promo.mp4 の写し -->
+        <video src="lp/media/guardnet-d-promo.mp4" poster="lp/media/poster.jpg" muted loop playsinline autoplay controls preload="metadata"></video>
+      </div>
+    </div>
+  </section>
+
+  <section class="point wide reveal">
+    <div class="wrap">
+      <div class="point-text center">
+        <p class="num">01</p>
+        <h2 class="one" style="--n:16">申し込む手前で、何重にもブロック</h2>
+        <p>見守り<wbr>プラン（月額390円・税込）の<wbr>機能です。</p>
+      </div>
+    </div>
+    <ul class="btiles" aria-label="ブロックする物">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg><span>広告のページ</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg><span>ページからの<wbr>電話</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg><span>カート</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg><span>申し込みボタン</span></li>
+    </ul>
+  </section>
+  <section class="point reveal">
+    <div class="wrap point-in">
+      <div class="point-text">
+        <p class="num">02</p>
+        <h2 class="one" style="--n:14">病院や役所のページは表示可能</h2>
+        <p>見るだけの<wbr>ページや<wbr>予約の<wbr>ページは、<wbr>いつも<wbr>どおり開けます。<wbr>「購入」のような<wbr>言葉が<wbr>1つあるだけでは<wbr>ブロックしません。<wbr>ページの<wbr>中の<wbr>電話の<wbr>リンクは、<wbr>許可した<wbr>番号だけかけられます。</p>
+      </div>
+      <div class="stack one">
+        <figure class="device"><img src="lp/images/hospital-open.jpg" alt="見本の病院の Web 予約のページ。ブロックされずに開いている" width="603" height="1311"><figcaption>病院の予約のページも表示</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="point reveal">
+    <div class="wrap point-in">
+      <div class="point-text">
+        <p class="num">03</p>
+        <h2>ブロックの<wbr>通知と、<wbr>ページの<wbr>プレビュー</h2>
+        <p>見た<wbr>ページに<wbr>ついて<wbr>通知が<wbr>届くのは、<wbr>ブロックした<wbr>時だけです。<wbr>ページの<wbr>中身を<wbr>プレビューで<wbr>確かめて、<wbr>その<wbr>場で<wbr>許可できます。</p>
+      </div>
+      <div class="stack">
+        <figure class="device"><img src="lp/images/notify-inapp.jpg" alt="見守る人の iPhone に届いた通知「おばあちゃん：ブロックしました」" width="603" height="1311"><figcaption>見守る人に通知</figcaption></figure>
+        <figure class="device"><img src="lp/images/preview.jpg" alt="ブロックしたページのプレビュー。見本の申し込みページが映っている" width="603" height="1311"><figcaption>ページの中身を確認</figcaption></figure>
+        <figure class="device"><img src="lp/images/allow-real.jpg" alt="今後の扱いを選ぶボタン。「このページのみ許可」など" width="603" height="1311"><figcaption>その場で許可</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="point wide reveal">
+    <div class="wrap">
+      <div class="point-text center">
+        <p class="num">04</p>
+        <h2>ブロック対象を、<wbr>細かく<wbr>設定可能</h2>
+        <p>設定を<wbr>変えられるのは、<wbr>見守る<wbr>人だけです。</p>
+      </div>
+    </div>
+    <ul class="rail" aria-label="見守る人の iPhone の設定画面">
+      <li><p class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>ブロック履歴</p><div class="device"><img src="lp/images/history-clean.jpg" alt="ブロック履歴の画面" width="603" height="1311"></div></li>
+      <li><p class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>ブロック対象</p><div class="device"><img src="lp/images/targets.jpg" alt="ブロック対象の画面。通販サイトや電話注文をオンとオフにできる" width="603" height="1311"></div></li>
+      <li><p class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7V5h14v2M12 5v14M9 19h6"/><path d="M4 20L20 4"/></svg>ブロックワード</p><div class="device"><img src="lp/images/words.jpg" alt="ブロックワードの画面" width="603" height="1311"></div></li>
+      <li><p class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M3 11h16M11 3c2.5 2.6 2.5 13.4 0 16M11 3c-2.5 2.6-2.5 13.4 0 16"/></svg>ブロックサイト</p><div class="device"><img src="lp/images/blocked-sites.jpg" alt="ブロックサイトの画面" width="603" height="1311"></div></li>
+      <li><p class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>ページの<wbr>許可</p><div class="device"><img src="lp/images/allow-real.jpg" alt="ページの許可を選ぶ画面" width="603" height="1311"></div></li>
+      <li><p class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 19c.8-3.4 3.2-5 6-5s5.2 1.6 6 5M15 14.5c2.6-.3 4.8 1 5.6 4"/></svg>グループ</p><div class="device"><img src="lp/images/group.jpg" alt="グループの画面。見守る人を招待できる" width="603" height="1311"></div></li>
+    </ul>
+  </section>
+
+  <section class="point reveal">
+    <div class="wrap point-in">
+      <div class="point-text">
+        <p class="num">05</p>
+        <h2>QR を<wbr>読み取るだけで<wbr>連携完了</h2>
+        <p>パスワードも、<wbr>難しい<wbr>操作も<wbr>いりません。<wbr>両方の<wbr> iPhone で<wbr> iCloud に<wbr>サインインしておく<wbr>必要が<wbr>あります。</p>
+      </div>
+      <div class="stack two">
+        <figure class="device"><img src="lp/images/onboarding.jpg" alt="最初の画面。「見守ってもらう」「見守る」の2つから選ぶ" width="603" height="1311"><figcaption>最初にどちらかを選択</figcaption></figure>
+        <figure class="device"><img src="lp/images/qr.jpg" alt="見守る人に読み取ってもらう QR の画面" width="603" height="1311"><figcaption>この QR を読み取り</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="point reveal">
+    <div class="wrap point-in">
+      <div class="point-text">
+        <p class="num">06</p>
+        <h2>偽の<wbr>ウイルス警告も<wbr>ブロック</h2>
+        <p>「ウイルスに<wbr>感染しています。<wbr>今すぐ<wbr>お電話ください」のような<wbr>ページを<wbr>ブロックします。<wbr>見守り<wbr>プランの<wbr>機能です。</p>
+      </div>
+      <div class="stack two">
+        <figure class="device"><img src="lp/images/scam-page.jpg" alt="見本の偽のウイルス警告のページ" width="603" height="1311"><figcaption>ほかのブラウザで開くと</figcaption></figure>
+        <figure class="device"><img src="lp/images/blocked-scam.jpg" alt="同じページをガードネットで開くとブロックした画面" width="603" height="1311"><figcaption>ガードネットで開くと</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="others reveal">
+    <div class="wrap">
+      <h2>ほかにも</h2>
+      <ul class="others-grid">
+        <li><h3>開発者へのデータ送信なし</h3><p>記録は<wbr>見守られる<wbr>人の<wbr> iCloud に<wbr>保存します。<wbr>開発者は<wbr>読めません。</p></li>
+        <li><h3>広告ブロックは無料</h3><p>見守り<wbr>プランに<wbr>入らなくても<wbr>使えます。</p></li>
+        <li><h3>YouTube などのアプリへの移動なし</h3><p>リンクを<wbr>押しても、<wbr>YouTube などの<wbr>アプリは<wbr>開きません。<wbr>電話・<wbr>メール・LINE などは<wbr>開きます。</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="price reveal" id="price">
+    <div class="wrap">
+      <div class="price-card">
+        <h2>ブロックと<wbr>見守りは、<br><span class="grad-h">月額390円</span></h2>
+        <div class="plans">
+          <div class="plan"><p class="plan-name">無料版</p><p class="plan-price">無料</p><ul class="plan-feats"><li>広告ブロック</li><li>ブラウザ利用</li></ul></div>
+          <div class="plan main"><p class="plan-name">見守り<wbr>プラン</p><p class="plan-price">月額 390円<small>年額 3,900円<wbr>（どちらも<wbr>税込）</small></p><ul class="plan-feats"><li>申し込む手前の<wbr>ブロック<wbr>（カート・<wbr>電話など）</li><li>ブロック通知</li><li>5つの<wbr>機能<wbr>（ブロック履歴・ブロック対象・ブロックワード・許可サイト・ブロックサイト）</li></ul></div>
+        </div>
+        <p>1人が<wbr>契約すれば、<wbr>同じ<wbr>グループの<wbr>見守る<wbr>人全員が<wbr>使えます。<wbr>無料の<wbr>お試し期間は<wbr>ありません。</p>
+        <p class="small">期間が<wbr>終わる<wbr>24時間前までに<wbr>解約しないと、<wbr>自動で<wbr>更新されます。<wbr>解約は<wbr> iPhone の<wbr>設定の<wbr>「サブスクリプション」から<wbr>行えます。</p>
+        <a class="store-btn is-placeholder" href="#" aria-disabled="true">App Store で<wbr>見る<small>準備中</small></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="notice">
+    <div class="wrap">
+      <h2>ご注意</h2>
+      <ul>
+        <li>ガードネットの<wbr>中で<wbr>開いた<wbr>ページだけを<wbr>守ります。<wbr>Safari など<wbr>ほかの<wbr>ブラウザで<wbr>開いた<wbr>ページは<wbr>守れません。<wbr>最初の<wbr>設定で、<wbr>Safari を<wbr>オフに<wbr>する<wbr>手順を<wbr>案内します。</li>
+        <li>すべての<wbr>罠を<wbr>止められるわけではありません。</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="brand"><img src="lp/images/icon.png" alt="" width="24" height="24">ガードネット</p>
+    <p class="by">提供：AnIT（個人開発者）</p>
+    <p class="links"><a href="terms.html">利用規約</a><a href="privacy.html">プライバシーポリシー</a><a href="attributions.html">出典とライセンス</a></p>
+    <p class="by">お問い合わせ：<a href="mailto:g.sho.isshiki@gmail.com">g.sho.isshiki@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+// 画面に入った段から、下からふわっと出す（動きを減らす設定の人には出さない）
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+}
+</script>
+</body>
+</html>
