@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-06T01:49:59Z",
+  "generatedAt": "2026-11-07T01:17:16Z",
   "lists": [
     {
       "id": "japan-1",
@@ -13,16 +13,16 @@
     {
       "id": "easylist-1",
       "file": "easylist-1.json",
-      "rules": 57920,
-      "sha256": "db8a07663b93f4ff75581af6bda52d6c0c36fd8ef79c7b28873bb5673a6610d0",
+      "rules": 58223,
+      "sha256": "a288ff9606ba2796444bbd3e8feaa88393252c31d7615affafe2e8a7f56bc318",
       "source": "EasyList (https://easylist.to/)",
       "license": "CC-BY-SA-3.0"
     },
     {
       "id": "easyprivacy-1",
       "file": "easyprivacy-1.json",
-      "rules": 56435,
-      "sha256": "220ac9db900f66c1b5676c4f16d7e6dfc87fcad0de788556b4890e0d054dc483",
+      "rules": 56438,
+      "sha256": "ee424baccc49f11ab1607137b3a303db543550ad9f07c114e1048fc45bd0a2d1",
       "source": "EasyPrivacy (https://easylist.to/)",
       "license": "CC-BY-SA-3.0"
     }
